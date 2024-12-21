@@ -4,8 +4,8 @@ import { auth } from "@clerk/nextjs";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: `Edit Your Profile | Dev Overflow`,
-  description: `Edit the profile and Update your information, add a bio, and customize your profile on Dev Overflow.`,
+  title: `Edit Your Profile | NexLab`,
+  description: `Edit the profile and Update your information, add a bio, and customize your profile on NexLab.`,
 };
 
 const EditProfile = async () => {

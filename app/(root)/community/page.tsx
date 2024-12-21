@@ -9,9 +9,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Community | Dev Overflow",
+  title: "Community | NexLab",
   description:
-    "Dive into the vibrant community of over 1,000,000 developers on Dev Overflow. Connect, collaborate, and learn from fellow developers worldwide. Join us and be a part of the conversation!",
+    "Dive into the vibrant community of over 1,000,000 developers on NexLab. Connect, collaborate, and learn from fellow developers worldwide. Join us and be a part of the conversation!",
 };
 
 const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
@@ -23,7 +23,7 @@ const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
 
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">All Users</h1>
+      <h1 className="-mt-10 text-2xl font-semibold text-dark100_light900">All Users</h1>
 
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchBar

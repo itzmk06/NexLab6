@@ -1,97 +1,61 @@
 "use client";
 
-import Image from "next/image";
+import { sidebarLinks } from "@/constants/constant";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";  
 
-import { SignedOut, useAuth } from "@clerk/nextjs";
-
-import { Button } from "@/components/ui/button";
-
-import { sidebarLinks } from "@/constants";
-
-const LeftSidebar = () => {
-  const pathname = usePathname();
+export default function LeftSideBar() {
+  const pathName = usePathname();
   const { userId } = useAuth();
 
   const filteredLinks = userId
     ? sidebarLinks.map((link) =>
         link.route === "/profile"
           ? { ...link, route: `${link.route}/${userId}` }
-          : link,
+          : link
       )
     : sidebarLinks.filter((link) => link.route !== "/profile");
 
   return (
-    <section className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
-      <div className="flex flex-1 flex-col gap-6">
-        {filteredLinks.map((link) => {
+    <section className="bg-light900_dark200 custom-scrollbar sticky left-0 top-0 flex flex-col justify-between h-screen px-6 pt-20 shadow-xl dark:shadow-none overflow-y-auto max-sm:hidden lg:w-[250px] rounded-xl transition-all duration-300 ease-in-out transform">
+      <div className="flex flex-1 flex-col gap-4 ">
+        {filteredLinks.map((item) => {
           const isActive =
-            (pathname.includes(link.route) && link.route.length > 1) ||
-            pathname === link.route;
+            (pathName.includes(item.route) && item.route.length > 1) ||
+            pathName === item.route;
 
           return (
             <Link
-              key={link.route}
-              href={link.route}
-              className={`${
+              key={item.route}
+              href={item.route}
+              className={`group text-center flex items-center justify-start gap-3 px-2 py-2 hover:py-4 transition-all transform rounded-xl ease-in-out duration-5 hover:bg-${item.hoverColor} hover:shadow-2xl hover:scale-105 hover:border-2 ${
                 isActive
-                  ? "primary-gradient rounded-lg text-light-900"
-                  : "text-dark300_light900"
-              } flex items-center justify-start gap-4 bg-transparent p-4`}
+                  ? "bg-blue-600 text-white shadow-2xl   ring-blue-500"
+                  : "text-dark300_light900 bg-transparent"
+              }`}
+              style={{
+                borderColor: item.color,
+              }}
             >
-              <Image
-                src={link.imgURL}
-                alt={link.label}
-                width={20}
-                height={20}
-                className={`${isActive ? "" : "invert-colors"}`}
+              <i
+                className={`${item.icon} text-xl transition-all ease-in-out duration-300 transform group-hover:scale-105`}
+                style={{
+                  color: isActive ? "#ffffff" : item.color,
+                }}
               />
               <p
-                className={`${
-                  isActive ? "base-bold" : "base-medium"
-                } max-lg:hidden`}
+                className="-mt-2 text-xl font-semibold max-lg:hidden md:text-base opacity-90 transition-opacity duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-105"
+                style={{
+                  color:  "text-dark200_light300" , 
+                }}
               >
-                {link.label}
+                {item.label}
               </p>
             </Link>
           );
         })}
       </div>
-
-      <SignedOut>
-        <div className="flex flex-col gap-3">
-          <Link href="/sign-in">
-            <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-              <Image
-                src="/assets/icons/account.svg"
-                alt="sign in"
-                width={20}
-                height={20}
-                className="invert-colors lg:hidden"
-              />
-              <span className="primary-text-gradient max-lg:hidden">
-                Log In
-              </span>
-            </Button>
-          </Link>
-
-          <Link href="/sign-up">
-            <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-              <Image
-                src="/assets/icons/sign-up.svg"
-                alt="sign up"
-                width={20}
-                height={20}
-                className="invert-colors lg:hidden"
-              />
-              <span className="max-lg:hidden">Sign Up</span>
-            </Button>
-          </Link>
-        </div>
-      </SignedOut>
     </section>
   );
-};
-
-export default LeftSidebar;
+}

@@ -9,9 +9,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tags | Dev Overflow",
+  title: "Tags | NexLab",
   description:
-    "Explore a diverse range of tags used by developers on Dev Overflow. From popular frameworks like React and Next.js to specialized topics like machine learning and cybersecurity, discover the tags that categorize and organize the wealth of knowledge within our community.",
+    "Explore a diverse range of tags used by developers on NexLab. From popular frameworks like React and Next.js to specialized topics like machine learning and cybersecurity, discover the tags that categorize and organize the wealth of knowledge within our community.",
 };
 
 const TagsPage = async ({ searchParams }: SearchParamsProps) => {
@@ -23,7 +23,7 @@ const TagsPage = async ({ searchParams }: SearchParamsProps) => {
 
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">All Tags</h1>
+      <h1 className=" -mt-10 text-2xl font-semibold text-dark100_light900">All Tags</h1>
 
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchBar

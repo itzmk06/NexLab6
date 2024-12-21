@@ -1,28 +1,35 @@
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk as SpaceGrotesk } from "next/font/google";
 import React from "react";
+import { Raleway, Macondo, Poppins } from "next/font/google";
 import "./globals.css";
 import "../styles/prism.css";
 
-const inter = Inter({
+const raleway = Raleway({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-inter",
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  variable: "--font-raleway",
 });
-const spaceGrotesk = SpaceGrotesk({
+
+const macondo = Macondo({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-spaceGrotesk",
+  weight: "400",
+  variable: "--font-macondo",
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
-  title: "DevFlow",
+  title: "NexLab",
   description:
-    "A community-driven platform for asking and answering questions. Get Help, share knowledge, and collaborate with developers from around the world. Explore topics in web development, mobile app development, algorithms, data structure, and more.",
+    "Where developers unite to innovate. Empowering collaboration with cutting-edge tools for seamless project creation. Join the future of development!",
   icons: {
-    icon: "/assets/images/site-logo.svg",
+    icon: "/assets/nexlab.png",
   },
 };
 
@@ -35,8 +42,8 @@ export default function RootLayout({
     <html lang="en">
       <body
        suppressHydrationWarning={true}
-        className={`${inter.variable} ${spaceGrotesk.variable} custom-scrollbar`}
-      >
+       className={`${macondo.variable} ${raleway.variable} ${poppins.variable}`}
+>
         <ClerkProvider
           appearance={{
             elements: {

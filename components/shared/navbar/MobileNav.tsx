@@ -1,21 +1,23 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { sidebarLinks } from "@/constants";
-import { SignedOut, useAuth } from "@clerk/nextjs";
+import { sidebarLinks } from "@/constants/constant";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "@/context/ThemeProvider";
+import { useAuth } from "@clerk/nextjs";
 
 const NavContent = () => {
   const { userId } = useAuth();
-  const pathname = usePathname();
+  const pathName = usePathname();
+
   const filteredLinks = userId
     ? sidebarLinks.map((link) =>
         link.route === "/profile"
@@ -25,27 +27,25 @@ const NavContent = () => {
     : sidebarLinks.filter((link) => link.route !== "/profile");
 
   return (
-    <section className="flex h-full flex-col gap-6 pt-16">
+    <section className="flex flex-col gap-4 pt-6 md:pt-5">
       {filteredLinks.map((item) => {
         const isActive =
-          (pathname.includes(item.route) && item.route.length > 1) ||
-          pathname === item.route;
+          (pathName.includes(item.route) && item.route.length > 1) ||
+          pathName === item.route;
+
         return (
           <SheetClose asChild key={item.route}>
             <Link
               href={item.route}
-              className={`${isActive ? "primary-gradient rounded-lg text-light-900" : "text-dark300_light900"} flex items-center justify-start gap-4 bg-transparent p-4`}
+              className={`flex rounded-lg items-center justify-start  gap-3 px-2 py-2 transition-all duration-300
+                ${isActive ? "bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white" : "text-gray-600 dark:text-gray-300"}
+                rounded-lg hover:scale-105 hover:rounded-lg hover:bg-blue-200 dark:hover:bg-blue-500`}
             >
-              <Image
-                src={item.imgURL}
-                alt={item.label}
-                width={20}
-                height={20}
-                className={`${isActive ? "" : "invert-colors"}`}
+              <i
+                className={`${item.icon} text-xl transition-transform duration-300`}
+                style={{ color: isActive ? "#FFF" : item.color }}
               />
-              <p className={`${isActive ? "base-bold" : "base-medium"}`}>
-                {item.label}
-              </p>
+              <p className="text-base font-semibold">{item.label}</p>
             </Link>
           </SheetClose>
         );
@@ -54,56 +54,45 @@ const NavContent = () => {
   );
 };
 
-const MobileNav = () => {
+export default function MobileNav() {
+  const { mode } = useTheme();
+
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Image
-          src="/assets/icons/hamburger.svg"
-          alt="menu"
-          width={36}
-          height={36}
-          className="invert-colors sm:hidden"
-        />
-      </SheetTrigger>
-      <SheetContent side="left" className="background-light900_dark200 border">
-        <Link href="/" className="flex items-center gap-1 ">
+        <div className="sm:hidden cursor-pointer transition-all duration-300">
           <Image
-            src="/assets/images/site-logo.svg"
-            width={23}
-            height={23}
-            alt="DevFlow"
+            src="/assets/icons/hamburger.svg"
+            alt="menu"
+            width={35}
+            height={35}
+            className="transition-transform transform hover:rotate-90" 
+            style={{
+              filter: mode === "light" ? "invert(1)" : "invert(0)",
+            }}
           />
-          <p className="h2-bold text-dark100_light900 font-spaceGrotesk">
-            Dev <span className="text-primary-500">Overflow</span>
-          </p>
-        </Link>
-        <div>
-          <SheetClose asChild>
-            <NavContent />
-          </SheetClose>
-          <SignedOut>
-            <div className="flex flex-col gap-3">
-              <SheetClose asChild>
-                <Link href="/sign-in">
-                  <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-                    <span className="primary-text-gradient">Log In</span>
-                  </Button>
-                </Link>
-              </SheetClose>
-              <SheetClose asChild>
-                <Link href="/sign-up">
-                  <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-                    <span>Sign Up</span>
-                  </Button>
-                </Link>
-              </SheetClose>
-            </div>
-          </SignedOut>
+        </div>
+      </SheetTrigger>
+
+      <SheetContent className="bg-white -mt-2 dark:bg-gray-800 border-none w-64 shadow-lg transition-all duration-300 ease-in-out">
+        <SheetHeader>
+          <Link href="/dashboard" className="flex items-center gap-2  py-1 ">
+            <Image
+              className="w-8 md:w-8 rounded-md"
+              src={mode === "dark" ? "/assets/nexlab-light.png" : "/assets/nexlab.png"}
+              width={28}
+              height={28}
+              alt="NexLab"
+            />
+            <p className="text-2xl -ml-1 font-extrabold text-gray-800 dark:text-gray-100">
+              exLab
+            </p>
+          </Link>
+        </SheetHeader>
+        <div className="min-h-screen overflow-y-auto -mt-3">
+          <NavContent />
         </div>
       </SheetContent>
     </Sheet>
   );
-};
-
-export default MobileNav;
+}

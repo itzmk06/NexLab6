@@ -12,9 +12,12 @@ export interface ThemeOption {
 }
 
 export interface SidebarLink {
-  imgURL: string;
+  icon:string,
+  color:string,
+  // imgURL: string;
   route: string;
   label: string;
+  hoverColor: string;
 }
 
 export interface Job {

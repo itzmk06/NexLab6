@@ -1,7 +1,5 @@
 import Link from "next/link";
-
 import Metric from "@/components/shared/Metric";
-
 import { getFormattedNumber, getTimestamp } from "@/lib/utils";
 import { SignedIn } from "@clerk/nextjs";
 import EditDeleteAction from "../shared/EditDeleteAction";
@@ -32,44 +30,51 @@ const AnswerCard = ({
   createdAt,
 }: Props) => {
   const showActionButtons = clerkId && clerkId === author.clerkId;
+
   return (
     <Link
       href={`/question/${question._id}/#${_id}`}
-      className="card-wrapper rounded-[10px] px-11 py-9"
+      className="card-wrapper bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg p-6 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
     >
-      <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
-        <div>
-          <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
+      <div className="flex flex-col-reverse sm:flex-row items-start justify-between gap-4 sm:gap-6">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+          <span className="text-sm text-gray-400 sm:hidden">
             {getTimestamp(createdAt)}
           </span>
-          <Link href={`/question/${question._id}`}>
-            <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
+          <Link href={`/question/${question._id}`} passHref>
+            <h3 className="text-white font-semibold text-lg line-clamp-2 hover:text-accent transition-colors duration-300 ease-in-out">
               {question.title}
             </h3>
           </Link>
         </div>
+
         <SignedIn>
           {showActionButtons && (
-            <EditDeleteAction type="answer" itemId={JSON.stringify(_id)} />
+            <EditDeleteAction
+              type="answer"
+              itemId={JSON.stringify(_id)}
+            />
           )}
         </SignedIn>
       </div>
-      <div className="flex-between mt-6 w-full flex-wrap gap-3">
+
+      <div className="mt-6 flex flex-wrap gap-4 w-full justify-between items-center">
         <Metric
           imgUrl={author.picture || "/assets/icons/avatar.svg"}
           alt="User"
           value={author.name}
-          title={`- asked ${getTimestamp(createdAt)}`}
+          title={`Answered ${getTimestamp(createdAt)}`}
           href={`/profile/${author._id}`}
           isAuthor
-          textStyles="bogy-medium text-dark400_light700"
+          textStyles="text-white font-medium"
         />
+
         <Metric
           imgUrl="/assets/icons/like.svg"
           alt="Upvotes"
           value={getFormattedNumber(upvotes)}
-          title=" Votes"
-          textStyles="small-medium text-dark400_light800"
+          title="Upvotes"
+          textStyles="text-white font-medium"
         />
       </div>
     </Link>

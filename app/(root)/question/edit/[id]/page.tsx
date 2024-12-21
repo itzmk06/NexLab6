@@ -42,10 +42,10 @@ export async function generateMetadata(
     questionId: id,
   });
   // construct description based on user data
-  const description = `Edit the question "${question.title}" on Dev Overflow. Update the content, tags, and details of your question.`;
+  const description = `Edit the question "${question.title}" on NexLab. Update the content, tags, and details of your question.`;
 
   return {
-    title: `Edit: ${question.title} | Dev Overflow`,
+    title: `Edit: ${question.title} | NexLab`,
     description
   };
 }

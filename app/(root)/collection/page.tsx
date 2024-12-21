@@ -10,9 +10,9 @@ import { auth } from "@clerk/nextjs";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Collections | Dev Overflow",
+  title: "Collections | NexLab",
   description:
-    "Explore a personalized collection of your saved questions on Dev Overflow. Join our community of over 1,000,000 developers and access your curated repository of valuable insights and solutions.",
+    "Explore a personalized collection of your saved questions on NexLab. Join our community of over 1,000,000 developers and access your curated repository of valuable insights and solutions.",
 };
 
 export default async function CollectionPage({
@@ -30,7 +30,7 @@ export default async function CollectionPage({
   });
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">Saved Questions</h1>
+      <h1 className="-mt-10 text-2xl font-semibold text-dark100_light900">Saved Questions</h1>
 
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchBar

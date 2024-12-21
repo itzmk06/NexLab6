@@ -128,10 +128,10 @@ export async function generateMetadata(
     questionId: id,
   });
   // construct description based on user data
-  const description = `Find answers and discussions about the question "${question.title}" on Dev Overflow.`;
+  const description = `Find answers and discussions about the question "${question.title}" on NexLab.`;
 
   return {
-    title: `${question.title} | Dev Overflow`,
+    title: `${question.title} | NexLab`,
     description
   };
 }

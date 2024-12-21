@@ -125,7 +125,7 @@ export async function generateMetadata(
   const description = `Explore the profile of ${user.name}. ${user.bio ? user.bio : ""}`;
 
   return {
-    title: `${user.name}'s Profile | Dev Overflow`,
+    title: `${user.name}'s Profile | NexLab`,
     description
   };
 }
